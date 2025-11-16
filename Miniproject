@@ -1,0 +1,78 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class PayrollGenerator extends JFrame implements ActionListener {
+
+    JTextField nameField, basicField, allowanceField, deductionField, netSalaryField;
+    JButton calculateBtn, clearBtn;
+
+    public PayrollGenerator() {
+
+        setTitle("Payroll Generator");
+        setSize(400, 350);
+        setLayout(new GridLayout(6, 2, 10, 10));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        add(new JLabel("Employee Name:"));
+        nameField = new JTextField();
+        add(nameField);
+
+        add(new JLabel("Basic Pay:"));
+        basicField = new JTextField();
+        add(basicField);
+
+        add(new JLabel("Allowances:"));
+        allowanceField = new JTextField();
+        add(allowanceField);
+
+        add(new JLabel("Deductions:"));
+        deductionField = new JTextField();
+        add(deductionField);
+
+        add(new JLabel("Net Salary:"));
+        netSalaryField = new JTextField();
+        netSalaryField.setEditable(false);
+        add(netSalaryField);
+
+        calculateBtn = new JButton("Calculate Salary");
+        clearBtn = new JButton("Clear");
+
+        calculateBtn.addActionListener(this);
+        clearBtn.addActionListener(this);
+
+        add(calculateBtn);
+        add(clearBtn);
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == calculateBtn) {
+            try {
+                double basic = Double.parseDouble(basicField.getText());
+                double allowance = Double.parseDouble(allowanceField.getText());
+                double deduction = Double.parseDouble(deductionField.getText());
+
+                double netSalary = basic + allowance - deduction;
+                netSalaryField.setText(String.valueOf(netSalary));
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Enter valid numbers!");
+            }
+        }
+
+        if (e.getSource() == clearBtn) {
+            nameField.setText("");
+            basicField.setText("");
+            allowanceField.setText("");
+            deductionField.setText("");
+            netSalaryField.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        new PayrollGenerator();
+    }
+}
